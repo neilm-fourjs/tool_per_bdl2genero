@@ -8,6 +8,7 @@ fgl_frm1 =
 #depend::
 #	echo "making depends";  cd lib ; ./link_lib
 
-PRG1=tool_per_bdl2genero.42r
+ARG1=ALL
+PRG1=bdl2genero.42r
 
 include ./Make_fjs.inc
