@@ -177,13 +177,15 @@ FUNCTION process_form(l_fname STRING) RETURNS()
 		LET l_outname = l_fname.substring(1, x)
 		LET l_bakname = l_outname.append("per.njm")
 		LET l_outname = l_outname.append("per")
-		IF NOT os.Path.rename(l_outname.trim(), l_bakname.trim()) THEN
-			DISPLAY SFMT("Failed to backup %1! aborting.", l_outname.trim())
-			EXIT PROGRAM
-		END IF
-		IF NOT os.path.chRwx(l_bakname.trim(), "256") THEN
-			DISPLAY SFMT("Failed to chmod %1! aborting.", l_outname.trim())
-			EXIT PROGRAM
+		IF NOT os.path.exists(l_bakname) THEN
+			IF NOT os.Path.rename(l_outname.trim(), l_bakname.trim()) THEN
+				DISPLAY SFMT("Failed to backup %1! aborting.", l_outname.trim())
+				EXIT PROGRAM
+			END IF
+			IF NOT os.path.chRwx(l_bakname.trim(), "256") THEN
+				DISPLAY SFMT("Failed to chmod %1! aborting.", l_outname.trim())
+				EXIT PROGRAM
+			END IF
 		END IF
 	END IF
 
